@@ -5,8 +5,11 @@
       <map>
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/fragment_news.xml" value="0.23854166666666668" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/fragment_task.xml" value="0.2" />
+        <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/item_home.xml" value="0.23854166666666668" />
+        <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/layout/item_home_gray.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
       </map>
     </option>

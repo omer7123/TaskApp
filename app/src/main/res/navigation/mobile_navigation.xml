@@ -24,9 +24,9 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.ripalay.taskapp.TaskFragment"
+        android:name="com.ripalay.taskapp.NewsFragment"
         android:label="fragment_task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ripalay.taskapp.ProfileFragment"
