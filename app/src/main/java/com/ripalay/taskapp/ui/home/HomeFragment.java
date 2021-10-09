@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -57,6 +58,12 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
                 NewsModel news = (NewsModel) result.getSerializable("news");
                 news.setTime((String) result.getSerializable("time"));
                 adapter.addItem(news);
+            }
+        });
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
             }
         });
 
