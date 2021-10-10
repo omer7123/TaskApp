@@ -1,5 +1,7 @@
 package com.ripalay.taskapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,7 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.ripalay.taskapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String MY_SETTINGS = "my_settings";
     private ActivityMainBinding binding;
     private NavController navController;
 
@@ -38,21 +40,37 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+  /*      SharedPreferences sp = getSharedPreferences(MY_SETTINGS,
+                Context.MODE_PRIVATE);
+        // проверяем, первый ли раз открывается программа
+        boolean hasVisited = sp.getBoolean("hasVisited", false);
+
+        if (!hasVisited) {
+            navController.navigate(R.id.boardFragment);
+            sp.edit()
+                    .putBoolean("hasVisited", true)
+                    .apply(); // не забудьте подтвердить изменения
+        } else {
+            navController.navigate(R.id.navigation_home);
+        }
+*/
+
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.navigation_home ||
-                destination.getId() == R.id.navigation_dashboard ||
+                if (destination.getId() == R.id.navigation_home ||
+                        destination.getId() == R.id.navigation_dashboard ||
                         destination.getId() == R.id.navigation_notifications ||
-                        destination.getId() == R.id.profileFragment){
+                        destination.getId() == R.id.profileFragment) {
                     navView.setVisibility(View.VISIBLE);
-                }else{
+
+                } else {
                     navView.setVisibility(View.GONE);
                 }
 
-                if(destination.getId() == R.id.boardFragment){
+                if (destination.getId() == R.id.boardFragment || destination.getId() == R.id.taskFragment) {
                     getSupportActionBar().hide();
-                }else{
+                } else {
                     getSupportActionBar().show();
                 }
             }

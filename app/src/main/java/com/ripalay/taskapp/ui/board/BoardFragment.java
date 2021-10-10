@@ -1,5 +1,7 @@
 package com.ripalay.taskapp.ui.board;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -9,10 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -34,24 +39,14 @@ public class BoardFragment extends Fragment implements BoardAdapter.pos {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BoardAdapter adapter = new BoardAdapter();
-        adapter.setPos(this);
-        binding.viewPager.setAdapter(adapter);
+        initViewPager();
+        initListenner();
+        initOnBack();
 
 
-        new TabLayoutMediator(binding.tabLayout, binding.viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-            }
-        }).attach();
+    }
 
-        binding.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-                navController.navigate(R.id.navigation_home);
-            }
-        });
+    private void initOnBack() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -60,17 +55,53 @@ public class BoardFragment extends Fragment implements BoardAdapter.pos {
         });
     }
 
+    private void initListenner() {
+        binding.imageView.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.navigation_home);
+        });
+        binding.startBt.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.navigation_home);
+        });
+
+    }
+
+
+    private void initViewPager() {
+        BoardAdapter adapter = new BoardAdapter();
+        adapter.setPos(this);
+        binding.viewPager.setAdapter(adapter);
+
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 3) {
+                    Log.e("gf", "Visible");
+                    binding.startBt.setVisibility(View.VISIBLE);
+                } else {
+                    Log.e("gf", "Gone");
+                    binding.startBt.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
+        }).attach();
+
+    }
 
 
     @Override
     public void callBack(int position, String length) {
-        if (length == "Secure") {
+       /* if (length == "Secure") {
             binding.startBt.setVisibility(View.VISIBLE);
-
         } else {
             binding.startBt.setVisibility(View.GONE);
 
         }
-
+        Toast.makeText(requireContext(), length, Toast.LENGTH_LONG).show();
+*/
     }
 }
