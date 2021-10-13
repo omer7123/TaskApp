@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/drawable/bg_button.xml" value="0.2703125" />
+        <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/drawable/bg_text.xml" value="0.2703125" />
+        <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/drawable/cl_fons.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/drawable/tab_default.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/drawable/tab_indicatror_selected.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Project/TaskApp/app/src/main/res/drawable/tab_seletcor.xml" value="0.2703125" />

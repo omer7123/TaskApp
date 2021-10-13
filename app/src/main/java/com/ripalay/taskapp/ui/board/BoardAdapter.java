@@ -14,17 +14,13 @@ import com.ripalay.taskapp.R;
 import com.ripalay.taskapp.databinding.PagerBoardBinding;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
-    private pos pos;
     private String[] titles = new String[]{"News", "Fast", "Free", "Secure"};
-    private Integer[] images = new Integer[]{R.drawable.ic_icon_telega,
-            R.drawable.ic_icon_speed,
-            R.drawable.ic_free,
-            R.drawable.ic_secury};
+    private Integer[] images = new Integer[]{R.raw.news,
+            R.raw.speed,
+            R.raw.free,
+            R.raw.secure};
 
-    public void setPos(BoardAdapter.pos pos) {
-        this.pos = pos;
-        notifyDataSetChanged();
-    }
+
 
     private String[] dess = new String[]{"Самая быстрая программа с последними новостями в реальном времени",
             "News отображжает новейшие новости быстрее всех",
@@ -57,14 +53,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         public void onBind(int position) {
             binding.textTitle.setText(titles[position]);
-            binding.imageView.setImageResource(images[position]);
+            binding.imageView.setAnimation(images[position]);
             binding.textDesc.setText(dess[position]);
-
-            pos.callBack(getAdapterPosition(),titles[position]);
         }
     }
 
-    public interface pos {
-        void callBack(int position,String length);
-    }
 }

@@ -22,10 +22,11 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.ripalay.taskapp.Prefs;
 import com.ripalay.taskapp.R;
 import com.ripalay.taskapp.databinding.FragmentBoardBinding;
 
-public class BoardFragment extends Fragment implements BoardAdapter.pos {
+public class BoardFragment extends Fragment {
     private FragmentBoardBinding binding;
 
     @Override
@@ -57,12 +58,16 @@ public class BoardFragment extends Fragment implements BoardAdapter.pos {
 
     private void initListenner() {
         binding.imageView.setOnClickListener(v -> {
+            Prefs prefs = new Prefs(requireContext());
+            prefs.saveBoardState();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.navigation_home);
+            navController.navigateUp();
         });
         binding.startBt.setOnClickListener(v -> {
+            Prefs prefs = new Prefs(requireContext());
+            prefs.saveBoardState();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigate(R.id.navigation_home);
+            navController.navigateUp();
         });
 
     }
@@ -70,7 +75,6 @@ public class BoardFragment extends Fragment implements BoardAdapter.pos {
 
     private void initViewPager() {
         BoardAdapter adapter = new BoardAdapter();
-        adapter.setPos(this);
         binding.viewPager.setAdapter(adapter);
 
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -93,15 +97,5 @@ public class BoardFragment extends Fragment implements BoardAdapter.pos {
     }
 
 
-    @Override
-    public void callBack(int position, String length) {
-       /* if (length == "Secure") {
-            binding.startBt.setVisibility(View.VISIBLE);
-        } else {
-            binding.startBt.setVisibility(View.GONE);
 
-        }
-        Toast.makeText(requireContext(), length, Toast.LENGTH_LONG).show();
-*/
-    }
 }

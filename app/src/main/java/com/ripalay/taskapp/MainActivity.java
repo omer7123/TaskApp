@@ -68,16 +68,17 @@ public class MainActivity extends AppCompatActivity {
                     navView.setVisibility(View.GONE);
                 }
 
-                if (destination.getId() == R.id.boardFragment || destination.getId() == R.id.taskFragment) {
+                if (destination.getId() == R.id.boardFragment || destination.getId() == R.id.taskFragment || destination.getId() == R.id.profileFragment) {
                     getSupportActionBar().hide();
                 } else {
                     getSupportActionBar().show();
                 }
             }
         });
-
-        if (true)
+        Prefs prefs = new Prefs(this);
+        if (!prefs.isBoardShow()) {
             navController.navigate(R.id.boardFragment);
+        }
     }
 
     @Override
