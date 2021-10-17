@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502725362784",
+    "project_id": "taskapp-900cd",
+    "storage_bucket": "taskapp-900cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502725362784:android:de47ee3e86bf1cc7f12f05",
+        "android_client_info": {
+          "package_name": "com.ripalay.taskapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502725362784-le25bcuvtum695krkp1je3blrc7vvllu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFG2JkldKOEEcsQsLTTbiEpdHjmj4jEnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502725362784-le25bcuvtum695krkp1je3blrc7vvllu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

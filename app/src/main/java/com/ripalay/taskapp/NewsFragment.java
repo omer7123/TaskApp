@@ -1,5 +1,6 @@
 package com.ripalay.taskapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.ripalay.taskapp.databinding.FragmentNewsBinding;
 import com.ripalay.taskapp.models.NewsModel;
@@ -44,6 +46,8 @@ public class NewsFragment extends Fragment {
         binding.editText.requestFocus();
         if(binding.editText.requestFocus()){
             //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(binding.editText, InputMethodManager.SHOW_IMPLICIT);
         }
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

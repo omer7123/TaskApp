@@ -1,6 +1,8 @@
 package com.ripalay.taskapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,24 +17,32 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ripalay.taskapp.databinding.FragmentProfileBinding;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
+    private FirebaseAuth mAuth;
+
     private FragmentProfileBinding binding;
     static final int GALLERY_REQUEST = 1;
     private String imageEncoded;
@@ -52,6 +62,26 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        binding.outTv.setOnClickListener(v -> {
+            // Toast.makeText(requireContext(), FirebaseUser.get, Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder alert = new AlertDialog.Builder(new ContextThemeWrapper(requireActivity(), R.style.Theme_AppCompat_Light_Dialog_Alert));
+            alert.setTitle("Вы действительно хотите выйти ?").setMessage("fdfd").
+                    setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            FirebaseAuth.getInstance().signOut();
+                            close();
+                        }
+                    }).setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).show();
+        });
+
+
         prefs = new Prefs(requireContext());
         Uri iv;
         if (prefs.getStringImage().equals("")) {
@@ -99,4 +129,10 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
+
+    private void close() {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigate(R.id.loginFragment);
+    }
+
 }

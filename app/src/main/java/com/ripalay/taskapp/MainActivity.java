@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ripalay.taskapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,21 +41,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-  /*      SharedPreferences sp = getSharedPreferences(MY_SETTINGS,
-                Context.MODE_PRIVATE);
-        // проверяем, первый ли раз открывается программа
-        boolean hasVisited = sp.getBoolean("hasVisited", false);
-
-        if (!hasVisited) {
-            navController.navigate(R.id.boardFragment);
-            sp.edit()
-                    .putBoolean("hasVisited", true)
-                    .apply(); // не забудьте подтвердить изменения
-        } else {
-            navController.navigate(R.id.navigation_home);
-        }
-*/
-
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
@@ -68,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     navView.setVisibility(View.GONE);
                 }
 
-                if (destination.getId() == R.id.boardFragment || destination.getId() == R.id.taskFragment || destination.getId() == R.id.profileFragment) {
+                if (destination.getId() == R.id.boardFragment || destination.getId() == R.id.taskFragment ||
+                        destination.getId() == R.id.profileFragment || destination.getId() == R.id.loginFragment) {
+
                     getSupportActionBar().hide();
                 } else {
                     getSupportActionBar().show();
@@ -76,8 +64,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Prefs prefs = new Prefs(this);
+
         if (!prefs.isBoardShow()) {
             navController.navigate(R.id.boardFragment);
+        }
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null && prefs.isBoardShow()) {
+            navController.navigate(R.id.loginFragment);
         }
     }
 

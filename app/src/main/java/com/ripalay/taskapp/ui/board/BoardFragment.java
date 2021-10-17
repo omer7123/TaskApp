@@ -61,13 +61,13 @@ public class BoardFragment extends Fragment {
             Prefs prefs = new Prefs(requireContext());
             prefs.saveBoardState();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigateUp();
+            navController.navigate(R.id.loginFragment);
         });
         binding.startBt.setOnClickListener(v -> {
             Prefs prefs = new Prefs(requireContext());
             prefs.saveBoardState();
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-            navController.navigateUp();
+            navController.navigate(R.id.loginFragment);
         });
 
     }
