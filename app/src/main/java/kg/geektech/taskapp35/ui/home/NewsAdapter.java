@@ -125,7 +125,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void onBind(NewsModel s) {
 
-
+            SimpleDateFormat h = new SimpleDateFormat("h");
             SimpleDateFormat mm = new SimpleDateFormat("mm");
             SimpleDateFormat m = new SimpleDateFormat("m");
 
@@ -135,8 +135,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Date resultdate = new Date(lResultDate);
             if (lResultDate < 600000) {
                 binding.timeTv.setText(m.format(resultdate)+ " " + "минут назад");
-            }else{
+            }else if(lResultDate < 3600000){
                 binding.timeTv.setText(mm.format(resultdate) + " " + "минут назад");
+            }else{
+                binding.timeTv.setText(h.format(resultdate) + " " + "часов назад");
             }
 
             binding.emailTv.setText(s.getEmail());

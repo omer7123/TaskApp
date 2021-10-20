@@ -64,6 +64,8 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
                 NewsModel news = (NewsModel) result.getSerializable("news");
                 news.setCreatedAt((Long) result.getSerializable("time"));
                 adapter.addItem(news);
+                binding.progressBar.setVisibility(View.GONE);
+
             }
         });
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
@@ -81,6 +83,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
         adapter.setLongClick(this);
         adapter.setClick(this);
         binding.homeRv.setAdapter(adapter);
+
 
     }
 
@@ -133,7 +136,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
     }
 
     private void readData(){
-        binding.progressBar.setVisibility(View.VISIBLE);
+       // binding.progressBar.setVisibility(View.VISIBLE);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("news").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
