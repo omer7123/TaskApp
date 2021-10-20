@@ -1,7 +1,5 @@
-package com.ripalay.taskapp.ui.board;
+package kg.geektech.taskapp35.ui.board;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -10,21 +8,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.ripalay.taskapp.Prefs;
-import com.ripalay.taskapp.R;
-import com.ripalay.taskapp.databinding.FragmentBoardBinding;
+import kg.geektech.taskapp35.Prefs;
+import com.geektech.taskapp.R;
+import com.geektech.taskapp.databinding.FragmentBoardBinding;
 
 public class BoardFragment extends Fragment {
     private FragmentBoardBinding binding;

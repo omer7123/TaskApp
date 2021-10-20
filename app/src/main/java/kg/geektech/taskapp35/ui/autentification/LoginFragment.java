@@ -1,4 +1,4 @@
-package com.ripalay.taskapp.ui.autentification;
+package kg.geektech.taskapp35.ui.autentification;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,10 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.ripalay.taskapp.R;
-import com.ripalay.taskapp.databinding.FragmentLoginBinding;
-
-import java.util.concurrent.Executor;
+import com.geektech.taskapp.R;
+import com.geektech.taskapp.databinding.FragmentLoginBinding;
 
 
 public class LoginFragment extends Fragment {
@@ -84,16 +82,14 @@ public class LoginFragment extends Fragment {
 
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result != null) {
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                         try {
                             GoogleSignInAccount account = task.getResult(ApiException.class);
                             Log.e("TAG", "firebaseAuthWithGoogle:" + account.getId());
                             firebaseAuthWithGoogle(account.getIdToken());
                         } catch (ApiException e) {
-                            Log.e("TAG", "Google sign in failed", e);
+                            Log.e("TAG",        "Google sign in failed", e);
                         }
-                    }
                 });
 
     }
@@ -113,12 +109,10 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
                             updateUI(null);
                         }
@@ -138,18 +132,12 @@ public class LoginFragment extends Fragment {
                 .requestIdToken(getString(R.string.web_client_id))
                 .requestEmail()
                 .build();
-
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
     }
     public void updateUI(FirebaseUser account){
-
         if(account != null){
             Toast.makeText(requireContext(),mAuth.getCurrentUser().getEmail(),Toast.LENGTH_LONG).show();
             close();
-            //startActivity(new Intent(this,AnotherActivity.class));
-
-        }else {
-            //Toast.makeText(requireContext(),"U Didnt signed in",Toast.LENGTH_LONG).show();
         }
     }
 }

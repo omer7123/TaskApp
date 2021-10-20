@@ -7,7 +7,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.ripalay.taskapp"
+        applicationId "kg.geektech.taskapp35"
         minSdk 23
         targetSdk 30
         versionCode 1
@@ -46,14 +46,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Firebase
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
 
 
     //imageViewCircle
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
     //Lottie
     def lottieVersion = "4.2.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"

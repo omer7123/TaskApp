@@ -1,17 +1,29 @@
-package com.ripalay.taskapp.ui.home;
+package kg.geektech.taskapp35.ui.home;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ripalay.taskapp.databinding.ItemHomeBinding;
-import com.ripalay.taskapp.databinding.ItemHomeGrayBinding;
-import com.ripalay.taskapp.models.NewsModel;
+import com.geektech.taskapp.databinding.ItemHomeBinding;
+import com.geektech.taskapp.databinding.ItemHomeGrayBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import kg.geektech.taskapp35.models.NewsModel;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<NewsModel> list = new ArrayList<>();
@@ -93,8 +105,18 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void addItems(List<NewsModel> list) {
+        list.sort(Comparator.comparing(NewsModel::getCreatedAt));
+        Collections.reverse(list);
+        this.list.addAll(list);
+        notifyDataSetChanged();
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ItemHomeBinding binding;
+        private String string;
 
         public ViewHolder(@NonNull ItemHomeBinding binding) {
             super(binding.getRoot());
@@ -102,8 +124,25 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public void onBind(NewsModel s) {
+
+
+            SimpleDateFormat mm = new SimpleDateFormat("mm");
+            SimpleDateFormat m = new SimpleDateFormat("m");
+
+            long starttime = s.getCreatedAt();
+            long endtime = System.currentTimeMillis();
+            long lResultDate = endtime - starttime;
+            Date resultdate = new Date(lResultDate);
+            if (lResultDate < 600000) {
+                binding.timeTv.setText(m.format(resultdate)+ " " + "минут назад");
+            }else{
+                binding.timeTv.setText(mm.format(resultdate) + " " + "минут назад");
+            }
+
+            binding.emailTv.setText(s.getEmail());
             binding.textTitle.setText(s.getTitle());
-            binding.timeTv.setText(s.getTime());
+
+
             binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -123,6 +162,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class ViewHolderGray extends RecyclerView.ViewHolder {
         private ItemHomeGrayBinding binding;
+        private String string;
 
         public ViewHolderGray(@NonNull ItemHomeGrayBinding binding) {
             super(binding.getRoot());
@@ -130,8 +170,29 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public void onBind(NewsModel s) {
+            SimpleDateFormat mm = new SimpleDateFormat("mm");
+            SimpleDateFormat m = new SimpleDateFormat("m");
+            SimpleDateFormat h = new SimpleDateFormat("h");
+
+            long starttime = s.getCreatedAt();
+            long endtime = System.currentTimeMillis();
+            long lResultDate = endtime - starttime;
+            Date resultdate = new Date(lResultDate);
+            if (lResultDate < 600000) {
+                binding.timeTv.setText(m.format(resultdate)+ " " + "минут назад");
+            }else if(lResultDate < 3600000){
+                binding.timeTv.setText(mm.format(resultdate) + " " + "минут назад");
+            }else{
+                binding.timeTv.setText(h.format(resultdate) + " " + "часов назад");
+            }
+
+
+
+            //Date resultdate = new Date(s.getCreatedAt());
+
             binding.textTitle.setText(s.getTitle());
-            binding.timeTv.setText(s.getTime());
+            binding.emailTv.setText(s.getEmail());
+
             binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -152,7 +213,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onClickLong(int position);
 
         void onClick(int position);
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ripalay.taskapp.ui.notifications;
+package kg.geektech.taskapp35.ui.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.ripalay.taskapp.R;
-import com.ripalay.taskapp.databinding.FragmentNotificationsBinding;
+import com.geektech.taskapp.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
 

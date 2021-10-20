@@ -1,31 +1,36 @@
-package com.ripalay.taskapp.ui.home;
+package kg.geektech.taskapp35.ui.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.ripalay.taskapp.R;
-import com.ripalay.taskapp.databinding.FragmentHomeBinding;
-import com.ripalay.taskapp.models.NewsModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.geektech.taskapp.R;
+import com.geektech.taskapp.databinding.FragmentHomeBinding;
+import kg.geektech.taskapp35.models.NewsModel;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
     private NewsAdapter adapter;
+    private String email;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
 
@@ -33,6 +38,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter();
+        readData();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,7 +62,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 NewsModel news = (NewsModel) result.getSerializable("news");
-                news.setTime((String) result.getSerializable("time"));
+                news.setCreatedAt((Long) result.getSerializable("time"));
                 adapter.addItem(news);
             }
         });
@@ -85,7 +91,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
 
     @Override
     public void onClickLong(int position) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(requireContext());
+        AlertDialog.Builder alert = new AlertDialog.Builder(requireContext(), R.style.Theme_AppCompat_Light_Dialog_Alert);
         alert.setTitle("Внимание!").
                 setMessage("Удалить ?").
                 setPositiveButton("да", new DialogInterface.OnClickListener() {
@@ -107,15 +113,40 @@ public class HomeFragment extends Fragment implements NewsAdapter.onItemClick {
         Bundle bundle = new Bundle();
         bundle.putSerializable("news", adapter.getList().get(position));
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
-        navController.navigate(R.id.taskFragment, bundle);
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        getParentFragmentManager().setFragmentResultListener("edit_rk_news", getViewLifecycleOwner(), new FragmentResultListener() {
+        //if(email.equals(mAuth.getCurrentUser().getEmail())) {
+
+            navController.navigate(R.id.taskFragment, bundle);
+
+            getParentFragmentManager().setFragmentResultListener("edit_rk_news", getViewLifecycleOwner(), new FragmentResultListener() {
+                @Override
+                public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                    NewsModel news = (NewsModel) result.getSerializable("news");
+                    news.setCreatedAt((Long) result.getSerializable("time"));
+                    adapter.refactorItem(position, news);
+                }
+            });
+        //}
+    }
+
+    private void readData(){
+        binding.progressBar.setVisibility(View.VISIBLE);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("news").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                NewsModel news = (NewsModel) result.getSerializable("news");
-                news.setTime((String) result.getSerializable("time"));
-                adapter.refactorItem(position,news);
+            public void onSuccess(QuerySnapshot snapshots) {
+                List<NewsModel> list = snapshots.toObjects(NewsModel.class);
+                binding.progressBar.setVisibility(View.GONE);
+                adapter.addItems(list);
+
             }
         });
     }
 }
+
+

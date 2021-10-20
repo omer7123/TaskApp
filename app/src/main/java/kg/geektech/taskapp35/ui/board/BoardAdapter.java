@@ -1,17 +1,13 @@
-package com.ripalay.taskapp.ui.board;
+package kg.geektech.taskapp35.ui.board;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ripalay.taskapp.R;
-import com.ripalay.taskapp.databinding.PagerBoardBinding;
+import com.geektech.taskapp.R;
+import com.geektech.taskapp.databinding.PagerBoardBinding;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
     private String[] titles = new String[]{"News", "Fast", "Free", "Secure"};

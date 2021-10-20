@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "502725362784",
-    "project_id": "taskapp-900cd",
-    "storage_bucket": "taskapp-900cd.appspot.com"
+    "project_number": "285239103504",
+    "project_id": "taskapp35",
+    "storage_bucket": "taskapp35.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:502725362784:android:de47ee3e86bf1cc7f12f05",
+        "mobilesdk_app_id": "1:285239103504:android:22f9c5995f535db3a73a95",
         "android_client_info": {
-          "package_name": "com.ripalay.taskapp"
+          "package_name": "kg.geektech.taskapp35"
         }
       },
       "oauth_client": [
         {
-          "client_id": "502725362784-le25bcuvtum695krkp1je3blrc7vvllu.apps.googleusercontent.com",
+          "client_id": "285239103504-blbgjsj3pgrve0d94v5853n5jblntepr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDFG2JkldKOEEcsQsLTTbiEpdHjmj4jEnY"
+          "current_key": "AIzaSyCAvQ-FROgAPyVEwNylkKamX8rZtoA8QsI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "502725362784-le25bcuvtum695krkp1je3blrc7vvllu.apps.googleusercontent.com",
+              "client_id": "285239103504-blbgjsj3pgrve0d94v5853n5jblntepr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

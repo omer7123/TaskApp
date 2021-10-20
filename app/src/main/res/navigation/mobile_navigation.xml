@@ -7,39 +7,39 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.ripalay.taskapp.ui.home.HomeFragment"
+        android:name="kg.geektech.taskapp35.ui.home.HomeFragment"
         android:label="Новости"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.ripalay.taskapp.ui.dashboard.DashboardFragment"
+        android:name="kg.geektech.taskapp35.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.ripalay.taskapp.ui.notifications.NotificationsFragment"
+        android:name="kg.geektech.taskapp35.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.ripalay.taskapp.NewsFragment"
+        android:name="kg.geektech.taskapp35.NewsFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.ripalay.taskapp.ProfileFragment"
+        android:name="kg.geektech.taskapp35.ProfileFragment"
         android:label="Профиль"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/boardFragment"
-        android:name="com.ripalay.taskapp.ui.board.BoardFragment"
+        android:name="kg.geektech.taskapp35.ui.board.BoardFragment"
         android:label="fragment_board"
         tools:layout="@layout/fragment_board" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.ripalay.taskapp.ui.autentification.LoginFragment"
+        android:name="kg.geektech.taskapp35.ui.autentification.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
 </navigation>

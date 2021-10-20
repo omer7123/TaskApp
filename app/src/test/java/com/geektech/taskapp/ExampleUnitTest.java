@@ -1,4 +1,4 @@
-package com.ripalay.taskapp;
+package com.geektech.taskapp;
 
 import org.junit.Test;
 

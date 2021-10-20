@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
-    tools:context=".ui.autentification.LoginFragment">
+    tools:context="kg.geektech.taskapp35.ui.autentification.LoginFragment">
 
     <Button
         android:id="@+id/btnGoogle"

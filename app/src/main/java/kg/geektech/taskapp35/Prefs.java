@@ -1,4 +1,4 @@
-package com.ripalay.taskapp;
+package kg.geektech.taskapp35;
 
 import android.content.Context;
 import android.content.SharedPreferences;
