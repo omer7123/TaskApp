@@ -1,11 +1,18 @@
 package kg.geektech.taskapp35.models;
 
+import android.net.Uri;
+
 import java.io.Serializable;
+import java.net.URL;
 
 public class NewsModel implements Serializable {
     private String title;
     private long createdAt;
     private String email;
+    private String id;
+    private String describe;
+    private String imageUrl;
+    private long view_count;
 
     public NewsModel() {
 
@@ -15,6 +22,38 @@ public class NewsModel implements Serializable {
         this.title = title;
         this.createdAt = createdAt;
         this.email = email;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public long getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(long view_count) {
+        this.view_count = view_count;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {

@@ -42,4 +42,9 @@
         android:name="kg.geektech.taskapp35.ui.autentification.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/demoFragment"
+        android:name="kg.geektech.taskapp35.ui.DemoFragment"
+        android:label="fragment_demo"
+        tools:layout="@layout/fragment_demo" />
 </navigation>
