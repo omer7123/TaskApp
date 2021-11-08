@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="kg.geektech.taskapp35.ui.dashboard.DashboardFragment"
+        android:name="kg.geektech.taskapp35.ui.roomFragment.RoomFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 

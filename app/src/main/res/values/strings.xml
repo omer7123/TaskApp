@@ -6,4 +6,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="web_client_id">285239103504-6glmgqetcig6brj2sprpud4sduebrg6k.apps.googleusercontent.com</string>
+    <string name="news">news</string>
+    <string name="news_title">News</string>
 </resources>

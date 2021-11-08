@@ -2,12 +2,23 @@ package kg.geektech.taskapp35.models;
 
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.net.URL;
+import java.util.List;
 
+
+@Entity
 public class NewsModel implements Serializable {
+
+    @PrimaryKey
+    @NonNull
     private String title;
     private long createdAt;
+    //private List<String> usersLike;
     private String email;
     private String id;
     private String describe;

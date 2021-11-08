@@ -50,16 +50,12 @@ public class HomeFragment extends Fragment {
     private NewsAdapter adapter;
     private List<NewsModel> list;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-
-    private String email;
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter();
-
 
         adapter.setClick(new NewsAdapter.onItemClick() {
             @Override
@@ -81,7 +77,6 @@ public class HomeFragment extends Fragment {
                 if (news.getEmail() != null && news.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                     openFragment(news);
                 } else {
-                    Toast.makeText(requireContext(), news.getId(), Toast.LENGTH_SHORT).show();
                     news.setView_count(news.getView_count() + 1);
                     FirebaseFirestore.getInstance()
                             .collection("news")
@@ -158,6 +153,8 @@ public class HomeFragment extends Fragment {
         // adapter.setLongClick(this);
         // adapter.setClick(this);
         binding.homeRv.setAdapter(adapter);
+        binding.progressBar.setVisibility(View.GONE);
+
 
 
     }

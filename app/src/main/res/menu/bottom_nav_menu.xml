@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_account"
-        android:title="@string/title_home" />
+        android:icon="@drawable/ic_news_nav"
+        android:title="@string/news_title" />
 
     <item
         android:id="@+id/navigation_dashboard"
@@ -17,7 +17,7 @@
         android:title="@string/title_notifications" />
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_baseline_add_a_photo_24"
-        android:title="Gallery" />
+        android:icon="@drawable/ic_account"
+        android:title="Account" />
 
 </menu>

@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment {
         binding.outTv.setOnClickListener(v -> {
             // Toast.makeText(requireContext(), FirebaseUser.get, Toast.LENGTH_SHORT).show();
             AlertDialog.Builder alert = new AlertDialog.Builder(new ContextThemeWrapper(requireActivity(), R.style.Theme_AppCompat_Light_Dialog_Alert));
-            alert.setTitle("Вы действительно хотите выйти ?").setMessage("fdfd").
+            alert.setTitle("Вы действительно хотите выйти ?").
                     setPositiveButton("Да", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

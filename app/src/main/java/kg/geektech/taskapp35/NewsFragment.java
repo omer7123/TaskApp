@@ -3,6 +3,7 @@ package kg.geektech.taskapp35;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,8 @@ import com.google.firebase.storage.UploadTask;
 
 import kg.geektech.taskapp35.models.NewsModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.UUID;
@@ -46,6 +50,8 @@ public class NewsFragment extends Fragment {
     private FragmentNewsBinding binding;
     private NewsModel news = null;
     private Uri uri;
+    private Bitmap bitmap;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +67,7 @@ public class NewsFragment extends Fragment {
 
             if (news.getImageUrl() != null) {
                 Glide.with(binding.pictIv.getContext()).load(news.getImageUrl()).into(binding.pictIv);
-            }else {
+            } else {
                 binding.pictIv.setImageResource(R.drawable.ic_launcher_foreground);
             }
             if (news.getDescribe() != null) {
@@ -92,14 +98,17 @@ public class NewsFragment extends Fragment {
 
             }
         });
-        binding.setIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, 1);
+        binding.pictIv.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
 
-            }
+        });
+        binding.setIv.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+
         });
 
     }
@@ -109,6 +118,11 @@ public class NewsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             binding.pictIv.setImageURI(uri);
         }
     }
@@ -127,21 +141,26 @@ public class NewsFragment extends Fragment {
             news.setDescribe(binding.describeEt.getText().toString());
             Log.e("ololo", "Save data  = new " + news);
             if (uri != null) {
+                binding.btnSave.setEnabled(false);
                 uploadFile();
             } else {
                 safeToFirestore(news);
             }
         } else {
             news.setTitle(binding.editText.getText().toString());
-
+            news.setDescribe(binding.describeEt.getText().toString());
             update(news);
         }
     }
 
     private void uploadFile() {
+        binding.progressBar.setVisibility(View.VISIBLE);
         String uuid = UUID.randomUUID().toString();
         StorageReference reference = storage.getReference().child("images/" + uuid + ".jpg");
-        UploadTask task = reference.putFile(uri);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask task = reference.putBytes(data);
         task.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
@@ -158,6 +177,7 @@ public class NewsFragment extends Fragment {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     news.setImageUrl(task.getResult().toString());
+                    binding.progressBar.setVisibility(View.GONE);
                     safeToFirestore(news);
                 } else {
                     Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
@@ -191,7 +211,7 @@ public class NewsFragment extends Fragment {
                 });
         db.collection("news")
                 .document(news.getId())
-                .update("imageUrl",news.getImageUrl())
+                .update("imageUrl", news.getImageUrl())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -214,8 +234,8 @@ public class NewsFragment extends Fragment {
                         Log.e("ololo", "safeToFirestore" + news);
 
                         if (task.isSuccessful()) {
-                            // loadUrl(task.getResult().getId());
-
+                            news.setId(task.getResult().getId());
+                            saveToRoom(news);
                             Log.e("ololo", "Save data " + news);
 
                             Toast.makeText(requireContext(), "Успешно", Toast.LENGTH_SHORT).show();
@@ -228,6 +248,10 @@ public class NewsFragment extends Fragment {
 
                 });
         close();
+    }
+
+    private void saveToRoom(NewsModel news) {
+        App.getInstance().getDatabase().newsDao().insert(news);
     }
 
     private void close() {

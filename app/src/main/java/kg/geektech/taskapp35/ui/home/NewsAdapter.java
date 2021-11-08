@@ -1,6 +1,7 @@
 package kg.geektech.taskapp35.ui.home;
 
 import android.os.Build;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import kg.geektech.taskapp35.models.NewsModel;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -132,49 +136,27 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if (mAuth.getCurrentUser().getEmail() == s.getEmail()) {
                     click.onClick(getAdapterPosition());
-//                        FirebaseFirestore.getInstance()
-//                                .collection("news")
-//                                .document(s.getId())
-//                                .update("view_count", FieldValue.increment(1));
-
-                    //                  }
                 }
             });
         }
 
         public void onBind(NewsModel s) {
 
-            SimpleDateFormat h = new SimpleDateFormat("H");
-            SimpleDateFormat hh = new SimpleDateFormat("HH");
-
-            SimpleDateFormat mm = new SimpleDateFormat("mm");
-            SimpleDateFormat m = new SimpleDateFormat("m");
-            SimpleDateFormat d = new SimpleDateFormat("d");
-
-
             long starttime = s.getCreatedAt();
             long endtime = System.currentTimeMillis();
             long lResultDate = endtime - starttime;
             Date resultdate = new Date(lResultDate);
-            if (lResultDate < 600000) {
-                binding.timeTv.setText(m.format(resultdate) + " " + "минут назад");
-            } else if (lResultDate < 3600000) {
-                binding.timeTv.setText(mm.format(resultdate) + " " + "минут назад");
-            } else if (lResultDate < 36000000) {
-                binding.timeTv.setText(h.format(resultdate) + " " + "часов назад");
-            } else if (lResultDate < 86400000) {
-                binding.timeTv.setText(hh.format(starttime) + " " + "часов назад");
-            } else {
-                binding.timeTv.setText(d.format(starttime) + " " + "дней назад");
-            }
+            PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+            String ago = prettyTime.format(new Date(starttime));
 
+            //            if (lResultDate < 600000) {
+            binding.timeTv.setText(ago);
             binding.emailTv.setText(s.getEmail());
             binding.textTitle.setText(s.getTitle());
             Glide.with(binding.pictIv.getContext())
                     .load(s.getImageUrl())
-                    .override(500,500)
+                    .override(1000, 1000)
                     .into(binding.pictIv);
             binding.viewCountTv.setText(String.valueOf(s.getView_count()));
 
@@ -200,43 +182,22 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if (mAuth.getCurrentUser().getEmail() == s.getEmail()) {
                     click.onClick(getAdapterPosition());
-
-                    //                  }
                 }
             });
         }
 
         public void onBind(NewsModel s) {
-            SimpleDateFormat mm = new SimpleDateFormat("mm");
-            SimpleDateFormat m = new SimpleDateFormat("m");
-            SimpleDateFormat h = new SimpleDateFormat("h");
-            SimpleDateFormat hh = new SimpleDateFormat("HH");
-
-            SimpleDateFormat d = new SimpleDateFormat("d");
-
             long starttime = s.getCreatedAt();
-            long endtime = System.currentTimeMillis();
-            long lResultDate = endtime - starttime;
-            Date resultdate = new Date(lResultDate);
-            if (lResultDate < 600000) {
-                binding.timeTv.setText(m.format(resultdate) + " " + "минут назад");
-            } else if (lResultDate < 3600000) {
-                binding.timeTv.setText(mm.format(resultdate) + " " + "минут назад");
-            } else if (lResultDate < 36000000) {
-                binding.timeTv.setText(h.format(resultdate) + " " + "часов назад");
-            } else if (lResultDate < 86400000) {
-                binding.timeTv.setText(hh.format(starttime) + " " + "часов назад");
-            } else {
-                binding.timeTv.setText(d.format(starttime) + " " + "дней назад");
-            }
-
-            //Date resultdate = new Date(s.getCreatedAt());
-
+            PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+            String ago = prettyTime.format(new Date(starttime));
+            binding.timeTv.setText(ago);
             binding.textTitle.setText(s.getTitle());
             binding.emailTv.setText(s.getEmail());
-                Glide.with(binding.pictIv.getContext()).load(s.getImageUrl()).into(binding.pictIv);
+            Glide.with(binding.pictIv.getContext())
+                    .load(s.getImageUrl())
+                    .override(1000, 1000)
+                    .into(binding.pictIv);
 
             binding.viewCountTv.setText(String.valueOf(s.getView_count()));
 
